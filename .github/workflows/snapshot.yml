@@ -1,0 +1,49 @@
+name: Basketball cloud snapshots
+
+# 每 10 分鐘替快開賽的 NBA 比賽存賽前預測到 snap 分支（bsnap/）。
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      bball_ahead:
+        description: "往後看幾小時（測試用）"
+        required: false
+        default: "6"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
+
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out snapshot branch
+        run: |
+          git fetch origin snap:snap || true
+          if git rev-parse --verify snap >/dev/null 2>&1; then
+            git worktree add snapdata snap
+          else
+            git worktree add --orphan -b snap snapdata
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save --no-package-lock jsdom@24
+      - name: Take snapshots
+        env:
+          TZ: Asia/Taipei
+        run: SNAP_AHEAD_H="${{ inputs.bball_ahead || 6 }}" node basketball/tools/snapshot.js snapdata/bsnap
+      - name: Commit
+        working-directory: snapdata
+        run: |
+          git add -A
+          if git diff --cached --quiet; then echo "沒有變化"; exit 0; fi
+          git -c user.name="snapshot-bot" -c user.email="actions@users.noreply.github.com" commit -qm "cloud snapshots $(date -u +%FT%TZ)"
+          git push origin snap
