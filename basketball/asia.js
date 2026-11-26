@@ -540,7 +540,7 @@ async function loadWnblPack(league = "wnbl") {
   const data = await res.json();
   const games = data.games || [];
   const tally = new Map();
-  for (const g of games) {
+  for (const g of [...(data.history || []), ...games]) {
     if (g.hs == null || g.as == null) continue;
     for (const [id, pf, pa, home] of [[g.home, g.hs, g.as, true], [g.away, g.as, g.hs, false]]) {
       if (!tally.has(id)) tally.set(id, []);
@@ -599,6 +599,7 @@ async function loadWnblMatch(id, league = "wnbl") {
   });
   if (league === "wnbl") model.wnblRank = { home: rank(card.home.id), away: rank(card.away.id) };
   else model.fibaNote = g.note || "";
+  model.neutral = !!g.neutral;
   model.round = g.round;
   return model;
 }

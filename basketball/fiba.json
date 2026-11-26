@@ -1,6 +1,6 @@
 {
  "source": "FIBA 官方賽程（維基百科轉錄、各國籃協新聞交叉確認）",
- "fetched": "2026-11-22 20:10 台北",
+ "fetched": "2026-11-26 12:20 台北",
  "season": "FIBA 2026 年 11 月國際窗口",
  "teams": {
   "JOR": {
@@ -26,6 +26,30 @@
   "HKG": {
    "en": "Hong Kong",
    "zh": "中國香港男籃"
+  },
+  "MAS": {
+   "en": "Malaysia",
+   "zh": "馬來西亞男籃"
+  },
+  "IDN": {
+   "en": "Indonesia",
+   "zh": "印尼男籃"
+  },
+  "SGP": {
+   "en": "Singapore",
+   "zh": "新加坡男籃"
+  },
+  "THA": {
+   "en": "Thailand",
+   "zh": "泰國男籃"
+  },
+  "MGL": {
+   "en": "Mongolia",
+   "zh": "蒙古男籃"
+  },
+  "VIE": {
+   "en": "Vietnam",
+   "zh": "越南男籃"
   }
  },
  "games": [
@@ -39,7 +63,8 @@
    "as": null,
    "venue": "MBank Arena（蒙古烏蘭巴托）",
    "comp": "亞杯預",
-   "note": "2029 亞洲盃資格賽第二輪預選 F 組。開賽時間 13:00（台北）已由轉播單位確認。"
+   "note": "2029 亞洲盃資格賽第二輪預選 F 組，蒙古烏蘭巴托中立場地（斐濟名義主隊）。第一輪戰績帶入第二輪：香港 3-0（場均得 82.7、失 57.7），斐濟 1-2（場均得 56、失 84.3，曾以 40-102 輸蒙古）。斐濟陣中 Filimone Waqabaca、Joshua Fox（第一輪對越南 20 籃板）是主力。第一輪對手不同，預測只供參考。開賽 13:00（台北）。",
+   "neutral": true
   },
   {
    "id": "fiba261127JORNZL",
@@ -64,6 +89,68 @@
    "venue": "Karisma Arena（馬來西亞芙蓉）",
    "comp": "世亞預",
    "note": "2027 世界盃亞洲區資格賽第二輪 E 組，第五窗口，中立場。主客依轉播排程（菲律賓為主隊）；FIBA 官方賽程列伊朗在前。"
+  }
+ ],
+ "history": [
+  {
+   "id": "fiba260828MASHKG",
+   "ts": 1787911200,
+   "home": "MAS",
+   "away": "HKG",
+   "hs": 54,
+   "as": 77,
+   "comp": "亞杯預 第一輪",
+   "src": "FIBA 新聞"
+  },
+  {
+   "id": "fiba260830HKGIDN",
+   "ts": 1788084000,
+   "home": "HKG",
+   "away": "IDN",
+   "hs": 71,
+   "as": 60,
+   "comp": "亞杯預 第一輪",
+   "src": "由 FIBA 小組總得失分（248／173）扣掉另兩場推算"
+  },
+  {
+   "id": "fiba260831HKGSGP",
+   "ts": 1788170400,
+   "home": "HKG",
+   "away": "SGP",
+   "hs": 100,
+   "as": 59,
+   "comp": "亞杯預 第一輪",
+   "src": "FIBA 新聞"
+  },
+  {
+   "id": "fiba260828THAFIJ",
+   "ts": 1787911200,
+   "home": "THA",
+   "away": "FIJ",
+   "hs": 94,
+   "as": 59,
+   "comp": "亞杯預 第一輪",
+   "src": "由 FIBA 小組總得失分（168／253）扣掉另兩場推算"
+  },
+  {
+   "id": "fiba260830MGLFIJ",
+   "ts": 1788084000,
+   "home": "MGL",
+   "away": "FIJ",
+   "hs": 102,
+   "as": 40,
+   "comp": "亞杯預 第一輪",
+   "src": "FIBA 新聞"
+  },
+  {
+   "id": "fiba260831FIJVIE",
+   "ts": 1788170400,
+   "home": "FIJ",
+   "away": "VIE",
+   "hs": 69,
+   "as": 57,
+   "comp": "亞杯預 第一輪",
+   "src": "Fiji Village／FIBA"
   }
  ]
 }

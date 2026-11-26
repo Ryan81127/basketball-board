@@ -109,7 +109,7 @@ function teamAvg(model, side) {
   const s = model.season?.[side] || {};
   const pf = Number(s.avgPoints);
   const pa = Number(s.avgPointsAgainst);
-  return Number.isFinite(pf) && Number.isFinite(pa) && pf > 60 ? { pf, pa, net: pf - pa, s } : null;
+  return Number.isFinite(pf) && Number.isFinite(pa) && pf > (model.league === "fiba" ? 30 : 60) ? { pf, pa, net: pf - pa, s } : null;
 }
 
 function formOf(model, side) {
@@ -159,13 +159,14 @@ function buildPrediction(model) {
   const ai = injuryImpact(model, "away");
   let statMargin = null;
   let statTotal = null;
+  const hca = model.neutral ? 0 : HCA;
   if (ha && aa) {
     const hExp = (ha.pf + aa.pa) / 2;
     const aExp = (aa.pf + ha.pa) / 2;
-    statMargin = hExp - aExp + HCA;
+    statMargin = hExp - aExp + hca;
     statTotal = hExp + aExp;
     if (hf && af) {
-      statMargin = statMargin * 0.7 + (hf.diff - af.diff + HCA) * 0.3 / 1;
+      statMargin = statMargin * 0.7 + (hf.diff - af.diff + hca) * 0.3 / 1;
       statTotal = statTotal * 0.75 + (hf.pts + hf.allow + af.pts + af.allow) / 2 * 0.25;
     }
     statMargin += -hi.pts + ai.pts;
@@ -188,7 +189,8 @@ function buildPrediction(model) {
 
   /* 理由 */
   if (mktMargin != null) reasons.push(`盤口開出 ${H} ${fmtHandicap(line ?? -mktMargin)}、大小分 ${trimNum(total)}，等於市場估 ${mktMargin >= 0 ? H : A} 贏 ${trimNum(Math.abs(mktMargin))} 分、總分約 ${trimNum(total)}。`);
-  if (ha && aa) reasons.push(`本季場均：${H} 得 ${trimNum(ha.pf)} 失 ${trimNum(ha.pa)}（淨 ${signed(ha.net)}），${A} 得 ${trimNum(aa.pf)} 失 ${trimNum(aa.pa)}（淨 ${signed(aa.net)}）；主場優勢約 ${HCA} 分。`);
+  if (ha && aa) reasons.push(`本季場均：${H} 得 ${trimNum(ha.pf)} 失 ${trimNum(ha.pa)}（淨 ${signed(ha.net)}），${A} 得 ${trimNum(aa.pf)} 失 ${trimNum(aa.pa)}（淨 ${signed(aa.net)}）；${model.neutral ? "中立場地，不加主場優勢" : `主場優勢約 ${HCA} 分`}。`);
+  if (model.league === "fiba" && model.fibaNote) reasons.push(`背景（事實）：${model.fibaNote}`);
   if (hf && af) reasons.push(`近 ${hf.n} 場：${H} ${hf.w} 勝、平均分差 ${signed(hf.diff)}；${A} ${af.w} 勝、平均分差 ${signed(af.diff)}。`);
   if (bpi != null) reasons.push(`ESPN BPI 給 ${H} 勝率 ${pct(model.predictor.home)}，換算約 ${signed(bpi)} 分。`);
   for (const [side, imp] of [["home", hi], ["away", ai]]) {
